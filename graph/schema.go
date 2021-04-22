@@ -5,6 +5,7 @@ import (
 
 	"github.com/graphql-go/graphql"
 	"github.com/isso0424/portfolio_api/graph/mutations/skill"
+	"github.com/isso0424/portfolio_api/graph/query"
 )
 
 func CreateSchema() graphql.Schema {
@@ -14,7 +15,7 @@ func CreateSchema() graphql.Schema {
 				graphql.ObjectConfig{
 					Name: "Root",
 					Fields: graphql.Fields{
-						"FetchSkill": skill.AddSkill,
+						"Skills": query.FetchSkill,
 					},
 				},
 			),
