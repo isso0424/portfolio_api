@@ -12,6 +12,9 @@ var Contact = graphql.NewObject(
 			"link": &graphql.Field{
 				Type: graphql.String,
 			},
+			"name": &graphql.Field{
+				Type: graphql.String,
+			},
 		},
 	},
 )

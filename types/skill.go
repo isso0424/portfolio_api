@@ -9,7 +9,7 @@ var Skill = graphql.NewObject(
 			"icon": &graphql.Field{
 				Type: graphql.String,
 			},
-			"text": &graphql.Field{
+			"name": &graphql.Field{
 				Type: graphql.String,
 			},
 		},
