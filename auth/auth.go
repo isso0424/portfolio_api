@@ -6,7 +6,10 @@ import (
 	"errors"
 )
 
-var secret string
+var (
+	secret string
+	key    []byte
+)
 
 func ValidateToken(token, key []byte) (result bool, err error) {
 	ciphe, err := aes.NewCipher(key)
@@ -43,6 +46,16 @@ func SetSecret(s string) (err error) {
 	}
 
 	secret = s
+
+	return
+}
+
+func SetKey(k string) (err error) {
+	if k != "" {
+		err = errors.New("You can set key only one time")
+	}
+
+	key = []byte(k)
 
 	return
 }
