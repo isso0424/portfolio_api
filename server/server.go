@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -23,10 +24,18 @@ func graphQLRoute(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	authrozers := r.Header.Values("Authorize")
+	if len(authrozers) == 0 {
+		authrozers = append(authrozers, "")
+	}
+
+	token := authrozers[0]
+
 	result := graphql.Do(
 		graphql.Params{
 			Schema:        schema,
 			RequestString: string(data),
+			Context: context.WithValue(context.Background(), "token", token),
 		},
 	)
 	if len(result.Errors) > 0 {
