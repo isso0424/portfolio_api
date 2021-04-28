@@ -1,9 +1,8 @@
 package auth
 
 import (
-	"crypto/aes"
-	"crypto/cipher"
-	"errors"
+	"strconv"
+	"time"
 )
 
 var (
@@ -11,51 +10,27 @@ var (
 	key    []byte
 )
 
-func ValidateToken(token, key []byte) (result bool, err error) {
-	ciphe, err := aes.NewCipher(key)
+func ValidateToken(token string) (result bool, err error) {
+	parsed, err := parseToken([]byte(token))
 	if err != nil {
 		return
 	}
 
-	gcm, err := cipher.NewGCM(ciphe)
+	secretLen := len(secret)
+	if len(parsed) < secretLen + 1 {
+		return
+	}
+
+	target, epochStr := parsed[:secretLen], parsed[secretLen:]
+
+	epoch, err := strconv.ParseInt(epochStr, 10, 64)
 	if err != nil {
 		return
 	}
 
-	nonceSize := gcm.NonceSize()
-	if len(token) < nonceSize {
-		err = errors.New("size of nonce is invalid")
+	nowEpoch := time.Now().Unix()
 
-		return
-	}
-
-	nonce, cipherText := token[:nonceSize], token[nonceSize:]
-	plaintext, err := gcm.Open(nil, nonce, cipherText, nil)
-	if err != nil {
-		return
-	}
-
-	result = string(plaintext) == secret
-
-	return
-}
-
-func SetSecret(s string) (err error) {
-	if secret != "" {
-		err = errors.New("You can set secret only one time")
-	}
-
-	secret = s
-
-	return
-}
-
-func SetKey(k string) (err error) {
-	if k != "" {
-		err = errors.New("You can set key only one time")
-	}
-
-	key = []byte(k)
+	result = epoch > nowEpoch && target == secret
 
 	return
 }
