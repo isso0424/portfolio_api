@@ -25,7 +25,7 @@ func graphQLRoute(w http.ResponseWriter, r *http.Request) {
 
 	result := graphql.Do(
 		graphql.Params{
-			Schema: schema,
+			Schema:        schema,
 			RequestString: string(data),
 		},
 	)

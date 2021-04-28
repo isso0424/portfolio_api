@@ -1,7 +1,7 @@
 package domain
 
 type Product struct {
-	Title string
+	Title       string
 	Description string
-	Tags []string
+	Tags        []string
 }

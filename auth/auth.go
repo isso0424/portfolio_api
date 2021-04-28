@@ -17,7 +17,7 @@ func ValidateToken(token string) (result bool, err error) {
 	}
 
 	secretLen := len(secret)
-	if len(parsed) < secretLen + 1 {
+	if len(parsed) < secretLen+1 {
 		return
 	}
 
