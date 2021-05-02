@@ -35,7 +35,7 @@ func graphQLRoute(w http.ResponseWriter, r *http.Request) {
 		graphql.Params{
 			Schema:        schema,
 			RequestString: string(data),
-			Context: context.WithValue(context.Background(), "token", token),
+			Context:       context.WithValue(context.Background(), "token", token),
 		},
 	)
 	if len(result.Errors) > 0 {
