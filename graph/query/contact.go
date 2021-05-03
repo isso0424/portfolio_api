@@ -6,9 +6,9 @@ import (
 	"github.com/isso0424/portfolio_api/types"
 )
 
-var FetchSkill = &graphql.Field{
-	Type: graphql.NewList(types.Skill),
+var FetchContact = &graphql.Field{
+	Type: graphql.NewList(types.Contact),
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-		return variables.SkillDB.GetAll()
+		return variables.ContactDB.GetAll()
 	},
 }

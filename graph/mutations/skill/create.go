@@ -33,6 +33,11 @@ var AddSkill = &graphql.Field{
 		name := p.Args["name"].(string)
 		log.Printf("%v\n", p.Args)
 
-		return variables.SkillDB.Add(name, icon), nil
+		skill, err := variables.SkillDB.Add(name, icon)
+		if skill == nil {
+			return nil, err
+		}
+
+		return *skill, err
 	},
 }

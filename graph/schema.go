@@ -17,6 +17,7 @@ func CreateSchema() graphql.Schema {
 					Fields: graphql.Fields{
 						"Skills": query.FetchSkill,
 						"Products": query.FetchProduct,
+						"Contacts": query.FetchContact,
 					},
 				},
 			),
