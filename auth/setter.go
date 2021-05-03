@@ -13,7 +13,7 @@ func SetSecret(s string) (err error) {
 }
 
 func SetKey(k string) (err error) {
-	if k != "" {
+	if len(key) != 0 {
 		err = errors.New("You can set key only one time")
 	}
 
