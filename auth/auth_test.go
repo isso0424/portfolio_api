@@ -77,4 +77,22 @@ func TestAuthorization(t *testing.T) {
 	}
 
 	assert.Equal(t, true, result)
+
+	incorrectToken := fmt.Sprintf("%s%d", "invalid", time.Now().Add(20 * time.Minute).Unix())
+	token, err = encrypt([]byte(incorrectToken), []byte(key))
+	result, err = auth.ValidateToken(string(token))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, false, result)
+
+	revokedToken := fmt.Sprintf("%s%d", secret, time.Now().Add(-20 * time.Minute).Unix())
+	token, err = encrypt([]byte(revokedToken), []byte(key))
+	result, err = auth.ValidateToken(string(token))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, false, result)
 }
