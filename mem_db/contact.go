@@ -6,7 +6,7 @@ type ContactDB struct {
 	data []domain.Contact
 }
 
-func (db *ContactDB) Add(name, text, link string) domain.Contact {
+func (db *ContactDB) Add(name, text, link string) (*domain.Contact, error) {
 	newContact := domain.Contact{
 		Name: name,
 		Text: text,
@@ -19,34 +19,34 @@ func (db *ContactDB) Add(name, text, link string) domain.Contact {
 		db.data = append(db.data, newContact)
 	}
 
-	return newContact
+	return &newContact, nil
 }
 
-func (db *ContactDB) searchByName(name string) (bool, int, domain.Contact) {
+func (db *ContactDB) searchByName(name string) (bool, int, *domain.Contact) {
 	for index, contact := range db.data {
 		if contact.Name == name {
-			return true, index, contact
+			return true, index, &contact
 		}
 	}
 
-	return false, -1, domain.Contact{}
+	return false, -1, nil
 }
 
-func (db *ContactDB) Delete(name string) domain.Contact {
+func (db *ContactDB) Delete(name string) (*domain.Contact, error) {
 	if exist, index, contact := db.searchByName(name); exist {
 		db.data = append(db.data[:index], db.data[index+1:]...)
-		return contact
+		return contact, nil
 	}
 
-	return domain.Contact{}
+	return nil, nil
 }
 
-func (db *ContactDB) GetAll() []domain.Contact {
-	return db.data
+func (db *ContactDB) GetAll() ([]domain.Contact, error) {
+	return db.data, nil
 }
 
-func (db *ContactDB) GetByName(name string) domain.Contact {
+func (db *ContactDB) GetByName(name string) (*domain.Contact, error) {
 	_, _, contact := db.searchByName(name)
 
-	return contact
+	return contact, nil
 }
