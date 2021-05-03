@@ -11,9 +11,8 @@ import (
 var FetchSkill = &graphql.Field{
 	Type: graphql.NewList(types.Skill),
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-		log.Println("hoge")
 		skills := variables.SkillDB.GetAll()
 		log.Printf("%v\n", skills)
-		return variables.SkillDB.GetAll(), nil
+		return skills, nil
 	},
 }
