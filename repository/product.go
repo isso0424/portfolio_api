@@ -1,10 +1,13 @@
 package repository
 
-import "github.com/isso0424/portfolio_api/domain"
+import (
+	"github.com/isso0424/portfolio_api/domain"
+	"github.com/isso0424/portfolio_api/types"
+)
 
 type ProductRepository interface {
-	Add(title, description string, tags []string) (*domain.Product, error)
-	Delete(title string) (*domain.Product, error)
-	GetAll() ([]domain.Product, error)
-	GetByTitle(title string) (*domain.Product, error)
+	Add(title, description string, tags []string) (*domain.Product, types.APIError)
+	Delete(title string) (*domain.Product, types.APIError)
+	GetAll() ([]domain.Product, types.APIError)
+	GetByTitle(title string) (*domain.Product, types.APIError)
 }
