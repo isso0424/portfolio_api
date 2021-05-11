@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/graphql-go/graphql"
+	"github.com/isso0424/portfolio_api/graph/mutations/contact"
 	"github.com/isso0424/portfolio_api/graph/mutations/product"
 	"github.com/isso0424/portfolio_api/graph/mutations/skill"
 	"github.com/isso0424/portfolio_api/graph/query"
@@ -28,6 +29,7 @@ func CreateSchema() graphql.Schema {
 					Fields: graphql.Fields{
 						"AddSkill": skill.AddSkill,
 						"AddProduct": product.AddProduct,
+						"AddContact": contact.AddContact,
 					},
 				},
 			),
