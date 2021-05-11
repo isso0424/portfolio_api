@@ -23,10 +23,7 @@ var AddSkill = &graphql.Field{
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		token := p.Context.Value("token").(string)
 		result, err := auth.ValidateToken(token)
-		if err != nil {
-			return nil, errors.New("invalid token")
-		}
-		if !result {
+		if err != nil || !result {
 			return nil, errors.New("invalid token")
 		}
 		icon := p.Args["icon"].(string)
