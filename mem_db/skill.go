@@ -50,6 +50,14 @@ func (db *SkillDB) GetByName(name string) (*domain.Skill, types.APIError) {
 	return nil, user_error.New("Skill: %s(name) is not found")
 }
 
+func (db *SkillDB) GetByID(id string) (*domain.Skill, types.APIError) {
+	if exist, _, skill := db.searchByID(id); exist {
+		return skill, nil
+	}
+
+	return nil, user_error.New("Skill: %s(name) is not found")
+}
+
 func (db *SkillDB) searchByName(name string) (bool, int, *domain.Skill) {
 	for index, skill := range db.data {
 		if skill.Name == name {

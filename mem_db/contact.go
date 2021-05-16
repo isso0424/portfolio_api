@@ -5,13 +5,11 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/isso0424/portfolio_api/domain"
-	"github.com/isso0424/portfolio_api/repository"
 	"github.com/isso0424/portfolio_api/types"
 	"github.com/isso0424/portfolio_api/types/user_error"
 )
 
 type ContactDB struct {
-	repository.ContactRepository
 	data []domain.Contact
 }
 
