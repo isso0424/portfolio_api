@@ -2,7 +2,6 @@ package skill
 
 import (
 	"errors"
-	"log"
 
 	"github.com/graphql-go/graphql"
 	"github.com/isso0424/portfolio_api/auth"
