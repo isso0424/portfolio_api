@@ -31,6 +31,8 @@ func CreateSchema() graphql.Schema {
 						"AddProduct": product.AddProduct,
 						"AddContact": contact.AddContact,
 						"DeleteContact": contact.DeleteContact,
+						"DeleteProduct": product.DeleteProduct,
+						"DeleteSkill": skill.DeleteSkill,
 					},
 				},
 			),
