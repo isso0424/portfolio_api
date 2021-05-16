@@ -9,36 +9,23 @@ import (
 	"github.com/isso0424/portfolio_api/types"
 )
 
-var AddProduct = &graphql.Field{
+var DeleteProduct = &graphql.Field{
 	Args: graphql.FieldConfigArgument{
 		"title": &graphql.ArgumentConfig{
 			Type: graphql.String,
-		},
-		"description": &graphql.ArgumentConfig{
-			Type: graphql.String,
-		},
-		"tags": &graphql.ArgumentConfig{
-			Type: graphql.NewList(
-				graphql.String,
-			),
 		},
 	},
 	Type: types.Product,
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		token := p.Context.Value("token").(string)
 		result, err := auth.ValidateToken(token)
-		if err != nil {
-			return nil, errors.New("invalid token")
-		}
-		if !result {
+		if err != nil || !result {
 			return nil, errors.New("invalid token")
 		}
 
 		title := p.Args["title"].(string)
-		description := p.Args["description"].(string)
-		tags := p.Args["tags"].([]string)
 
-		product, err := variables.ProductDB.Add(title, description, tags)
+		product, err := variables.ProductDB.Delete(title)
 		if product == nil {
 			return nil, err
 		}
