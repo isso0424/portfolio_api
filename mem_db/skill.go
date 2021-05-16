@@ -1,6 +1,7 @@
 package mem_db
 
 import (
+	"github.com/google/uuid"
 	"github.com/isso0424/portfolio_api/domain"
 	"github.com/isso0424/portfolio_api/types"
 	"github.com/isso0424/portfolio_api/types/user_error"
@@ -11,12 +12,14 @@ type SkillDB struct {
 }
 
 func (db *SkillDB) Add(name, icon string) (*domain.Skill, types.APIError) {
+	id := uuid.New().String()
 	newSkill := domain.Skill{
+		ID: id,
 		Name: name,
 		Icon: icon,
 	}
 
-	if exist, index, _ := db.searchByName(name); exist {
+	if exist, index, _ := db.searchByID(id); exist {
 		db.data[index] = newSkill
 	} else {
 		db.data = append(db.data, newSkill)
@@ -25,8 +28,8 @@ func (db *SkillDB) Add(name, icon string) (*domain.Skill, types.APIError) {
 	return &newSkill, nil
 }
 
-func (db *SkillDB) Delete(name string) (*domain.Skill, types.APIError) {
-	if exist, index, skill := db.searchByName(name); exist {
+func (db *SkillDB) Delete(id string) (*domain.Skill, types.APIError) {
+	if exist, index, skill := db.searchByID(id); exist {
 		db.data = append(db.data[:index], db.data[index+1:]...)
 
 		return skill, nil
@@ -50,6 +53,16 @@ func (db *SkillDB) GetByName(name string) (*domain.Skill, types.APIError) {
 func (db *SkillDB) searchByName(name string) (bool, int, *domain.Skill) {
 	for index, skill := range db.data {
 		if skill.Name == name {
+			return true, index, &skill
+		}
+	}
+
+	return false, -1, nil
+}
+
+func (db *SkillDB) searchByID(id string) (bool, int, *domain.Skill) {
+	for index, skill := range db.data {
+		if skill.ID == id {
 			return true, index, &skill
 		}
 	}

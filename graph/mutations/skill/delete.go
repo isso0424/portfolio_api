@@ -11,7 +11,7 @@ import (
 
 var DeleteSkill = &graphql.Field{
 	Args: graphql.FieldConfigArgument{
-		"name": &graphql.ArgumentConfig{
+		"id": &graphql.ArgumentConfig{
 			Type: graphql.String,
 		},
 	},
@@ -22,9 +22,9 @@ var DeleteSkill = &graphql.Field{
 		if err != nil || !result {
 			return nil, errors.New("invalid token")
 		}
-		name := p.Args["name"].(string)
+		id := p.Args["id"].(string)
 
-		skill, err := variables.SkillDB.Delete(name)
+		skill, err := variables.SkillDB.Delete(id)
 		if skill == nil {
 			return nil, err
 		}

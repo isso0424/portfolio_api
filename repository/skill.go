@@ -7,7 +7,8 @@ import (
 
 type SkillRepository interface {
 	Add(name, icon string) (*domain.Skill, types.APIError)
-	Delete(name string) (*domain.Skill, types.APIError)
+	Delete(id string) (*domain.Skill, types.APIError)
 	GetAll() ([]domain.Skill, types.APIError)
 	GetByName(name string) (*domain.Skill, types.APIError)
+	GetByID(id string) (*domain.Skill, types.APIError)
 }
