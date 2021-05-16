@@ -3,17 +3,22 @@ package mem_db
 import (
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/isso0424/portfolio_api/domain"
+	"github.com/isso0424/portfolio_api/repository"
 	"github.com/isso0424/portfolio_api/types"
 	"github.com/isso0424/portfolio_api/types/user_error"
 )
 
 type ContactDB struct {
+	repository.ContactRepository
 	data []domain.Contact
 }
 
 func (db *ContactDB) Add(name, text, link string) (*domain.Contact, types.APIError) {
+	id := uuid.New().String()
 	newContact := domain.Contact{
+		ID: id,
 		Name: name,
 		Text: text,
 		Link: link,
@@ -31,6 +36,16 @@ func (db *ContactDB) Add(name, text, link string) (*domain.Contact, types.APIErr
 func (db *ContactDB) searchByName(name string) (bool, int, *domain.Contact) {
 	for index, contact := range db.data {
 		if contact.Name == name {
+			return true, index, &contact
+		}
+	}
+
+	return false, -1, nil
+}
+
+func (db *ContactDB) searchByID(id string) (bool, int, *domain.Contact) {
+	for index, contact := range db.data {
+		if contact.ID == id {
 			return true, index, &contact
 		}
 	}
@@ -56,6 +71,16 @@ func (db *ContactDB) GetByName(name string) (*domain.Contact, types.APIError) {
 
 	if !exist {
 		return nil, user_error.New(fmt.Sprintf("Contact: %s(Name) is not found", name))
+	}
+
+	return contact, nil
+}
+
+func (db *ContactDB) GetByID(id string) (*domain.Contact, types.APIError) {
+	exist, _, contact := db.searchByID(id)
+
+	if !exist {
+		return nil, user_error.New(fmt.Sprintf("Contact: %s(id) is not found", id))
 	}
 
 	return contact, nil

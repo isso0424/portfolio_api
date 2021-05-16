@@ -11,7 +11,7 @@ import (
 
 var DeleteContact = &graphql.Field{
 	Args: graphql.FieldConfigArgument{
-		"name": &graphql.ArgumentConfig{
+		"id": &graphql.ArgumentConfig{
 			Type: graphql.String,
 		},
 	},
@@ -22,8 +22,8 @@ var DeleteContact = &graphql.Field{
 		if err != nil || !result {
 			return nil, errors.New("invalid token")
 		}
-		name := p.Args["name"].(string)
-		contact, err := variables.ContactDB.Delete(name)
+		id := p.Args["id"].(string)
+		contact, err := variables.ContactDB.Delete(id)
 		if contact == nil {
 			return nil, err
 		}
