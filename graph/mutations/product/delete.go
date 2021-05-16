@@ -11,7 +11,7 @@ import (
 
 var DeleteProduct = &graphql.Field{
 	Args: graphql.FieldConfigArgument{
-		"title": &graphql.ArgumentConfig{
+		"id": &graphql.ArgumentConfig{
 			Type: graphql.String,
 		},
 	},
@@ -23,9 +23,9 @@ var DeleteProduct = &graphql.Field{
 			return nil, errors.New("invalid token")
 		}
 
-		title := p.Args["title"].(string)
+		id := p.Args["id"].(string)
 
-		product, err := variables.ProductDB.Delete(title)
+		product, err := variables.ProductDB.Delete(id)
 		if product == nil {
 			return nil, err
 		}
