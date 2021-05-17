@@ -8,4 +8,6 @@ import (
 type Product struct {
 	domain.Product
 	gorm.Model
+	Tags string
+	ID string `gorm:"primarykey"`
 }
