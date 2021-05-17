@@ -8,4 +8,5 @@ import (
 type Contact struct {
 	domain.Contact
 	gorm.Model
+	ID string `gorm:"primarykey"`
 }
