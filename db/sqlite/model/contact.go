@@ -6,6 +6,6 @@ import (
 )
 
 type Contact struct {
-	gorm.Model
 	domain.Contact
+	gorm.Model
 }

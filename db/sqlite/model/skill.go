@@ -6,6 +6,6 @@ import (
 )
 
 type Skill struct {
-	gorm.Model
 	domain.Skill
+	gorm.Model
 }

@@ -6,6 +6,6 @@ import (
 )
 
 type Product struct {
-	gorm.Model
 	domain.Product
+	gorm.Model
 }
