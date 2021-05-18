@@ -15,7 +15,7 @@ type dbSet struct {
 	Contact contact.ContactDB
 }
 
-func initialize(dbPath string) (dbSet, error) {
+func Initialize(dbPath string) (dbSet, error) {
 	db, err := gorm.Open(sqlite.Open(dbPath))
 	if err != nil {
 		return dbSet{}, err
