@@ -8,4 +8,5 @@ import (
 type Skill struct {
 	domain.Skill
 	gorm.Model
+	ID string `gorm:"primarykey"`
 }
